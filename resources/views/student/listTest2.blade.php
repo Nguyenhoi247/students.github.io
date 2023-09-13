@@ -22,15 +22,16 @@
       Create
     </button>
 
-    <a href="{{ url('subjectform') }}" type="button" target="_blank">Create Subject</a>
+    
+    <a href="{{ url('subjectform') }}" class="btn btn-primary"  type="button" target="_blank">Create Subject</a>
+    <a href="{{ url('scoreform') }}" class="btn btn-primary" type="button" target="_blank">Create Score</a>
 
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
           <th>ID</th>
-          <th>First Name</th>
+          <th>Full Name</th>
           <th>Image</th>
-          <th>Last Name</th>
           <th>Subjects Name</th>
           <th>City Name</th>
           <th>Scores</th>
@@ -41,29 +42,32 @@
         @foreach ($users as $user)
         <tr>
           <td>{{ $user->id }}</br> {{ $user->created_at }}</td>
-          <td>{{ $user->first_name }}</td>
-
           <td>
-              @if($user->image)
-              <img src="{{ asset('storage/app/public/'.$user->image) }}" style="height:50px; width:100px;"/>
-              @else
-              <span>No image found!</span>
-              @endif
+            <a {{$user->id}} href="{{ url('studentSubject/'.$user->id) }}" type="button" target="_blank">
+              {{ $user->first_name }} {{ $user->last_name }}
+            </a>
           </td>
 
-          <td>{{ $user->last_name }}</td>
+          <td>
+            @if($user->image)
+            <img src="{{ asset('storage/app/public/'.$user->image) }}" style="height:50px; width:100px;" />
+            @else
+            <span>No image found!</span>
+            @endif
+          </td>
+
 
           <td>
             <a {{$user->subject_id}} href="{{ url('subjectstlist/'.$user->subject_id) }}" type="button" target="_blank">{{ $user->subject_name }}</a>
           </td>
-          
-          
+
+
           <td>{{ $user->city_name }}</td>
-          
-          
+
+
           <td>{{ $user->score_point }}</td>
-          
-          
+
+
           <td>{{ $user->email }}
             <form action="{{ url('/delete', $user->id) }}" method="post">
               @csrf
@@ -157,20 +161,20 @@
             <label>Email:</label>
             <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email"><br>
 
-          <!-- upload image -->
-          @if ($message = Session::get('success'))
-          <div class="alert alert-succsess alert-block">
-            <strong>{{$message}}</strong>
-          </div>>
-          
-          @endif
+            <!-- upload image -->
+            @if ($message = Session::get('success'))
+            <div class="alert alert-succsess alert-block">
+              <strong>{{$message}}</strong>
+            </div>>
 
-         
+            @endif
+
+
             @csrf
-          <input type="file" class="form-control" name="image" id="image">
-          
+            <input type="file" class="form-control" name="image" id="image">
+
             <button type="submit" id="saveBtn" value="Create student" class="btn btn-primary">Submit</button>
-         
+
           </form>
 
         </div>

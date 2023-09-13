@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
-
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentSubjectController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +41,10 @@ Route::get('/scorelist', [ScoreController::class, 'index1']);
 
 Route::get('/scoreform', [ScoreController::class, 'scoreform']);
 Route::post('/score', [ScoreController::class, 'score']);
+
+
+Route::get('/studentSubject/{id}', [StudentSubjectController::class, 'studentSubject']);
+
 // Route::post('/insertform', function () {
 //     return view('create');
 //     // return view('test' ,['name'=>'Test số 1']);
@@ -51,6 +56,23 @@ Route::post('/update/{id}', [StudentController::class, 'edit']);
 
 
 Route::post('/delete/{id}',[StudentController::class, 'destroy']);
+
+Route::group(['prefix'=>'teacher', 'as'=>'teacher.'], function(){
+
+    Route::get('/teacherlist',[TeacherController::class, 'index'])->name('teacherlist');
+    Route::post('/sortTeacher', [TeacherController::class, 'sortTeacher'])->name('sortTeacher');
+
+    
+    Route::get('/create_form', [TeacherController::class, 'insertform'])->name('create_form');
+    Route::post('/create', [TeacherController::class, 'insert'])->name('create');
+    
+    Route::get('/update/{id}', [TeacherController::class, 'updateform'])->name('update/{id}');
+    Route::post('/update/{id}',[TeacherController::class, 'edit'])->name('update/{id}');
+    
+    Route::post('/delete/{id}',[TeacherController::class, 'destroy'])->name('delete/{id}');
+
+    // Route::get('/create_form', [TeacherController::class, 'sortTeacher'])->name('create_form');
+});
 
 // Route::get('view-records', 'StudViewController@index');
 // Route::post('create', 'StudentController@insert');

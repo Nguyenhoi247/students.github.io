@@ -25,7 +25,7 @@
           <option class="" disabled selected>Select</option>
             @foreach($students as $student)
               <option class="form-control" value="{{$student->id}}">
-                  {{$student->first_name}}{{$student->last_name}}
+                  {{$student->first_name}} {{$student->last_name}}
               </option>
             @endforeach
       </select>
